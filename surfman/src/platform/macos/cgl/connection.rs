@@ -136,10 +136,11 @@ impl Connection {
         &self,
         raw_handle: raw_window_handle::RawWindowHandle,
     ) -> Result<NativeWidget, Error> {
-        use raw_window_handle::RawWindowHandle::MacOS;
+        use raw_window_handle::RawWindowHandle::AppKit;
+	// use raw_window_handle::RawWindowHandle::UiKit;
 
         match raw_handle {
-            MacOS(handle) => Ok(NativeWidget {
+            AppKit(handle) => Ok(NativeWidget {
                 view: NSView(unsafe { msg_send![handle.ns_view as id, retain] }),
             }),
             _ => Err(Error::IncompatibleNativeWidget),
